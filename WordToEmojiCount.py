@@ -112,18 +112,38 @@ with open("lv-youtuber-comments-v5.csv", mode='r', encoding="utf8") as csv_file:
             word_count_none.append(int(row["word_count"]))
             emoji_count_none.append(int(row["emoji_count"]))
 
+
+average_emojis = {}
+
+unique_word_count = list(set(word_count_total))
+
+for i in range(len(unique_word_count)):
+    total = 0
+    count = 0
+
+    for j in range(len(word_count_total)):
+        if word_count_total[j] == unique_word_count[i]:
+            total += emoji_count_total[j]
+            count += 1
+
+    average_emojis[unique_word_count[i]] = (total/count)
+
 # Total Analysis
 fig = plt.figure()
 
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(211)
 ax.set_xlabel('Word Count')
 ax.set_ylabel('Emoji Count')
-ax.set_xlim([-8,X_VAL])
-ax.set_ylim([-4,Y_VAL])
-
 plt.title('Word To Emoji Ratio')
+ax.scatter(word_count_total, emoji_count_total, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
-ax.scatter(word_count_total,emoji_count_total, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax = fig.add_subplot(212)
+ax.set_xlabel('Word Count')
+ax.set_ylabel('Average Emoji Count')
+plt.title('Average Word to Emoji Ratio')
+ax.scatter(list(average_emojis.keys()), list(average_emojis.values()), edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
+plt.axhline(y=0, color='r', linestyle='-', alpha=0.2)
+
 
 # Analysis By Category
 fig = plt.figure()
@@ -134,7 +154,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (MUSIC)')
-ax.scatter(word_count_music,emoji_count_music, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_music,emoji_count_music, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(332)
 ax.set_xlabel('Word Count')
@@ -142,7 +162,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (NEWS)')
-ax.scatter(word_count_news,emoji_count_news, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_news,emoji_count_news, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(333)
 ax.set_xlabel('Word Count')
@@ -150,7 +170,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (ENTERTAINMENT)')
-ax.scatter(word_count_entertainment,emoji_count_entertainment, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_entertainment,emoji_count_entertainment, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(334)
 ax.set_xlabel('Word Count')
@@ -158,7 +178,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (PEOPLE)')
-ax.scatter(word_count_people,emoji_count_people, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_people,emoji_count_people, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(335)
 ax.set_xlabel('Word Count')
@@ -166,7 +186,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (FILM)')
-ax.scatter(word_count_film,emoji_count_film, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_film,emoji_count_film, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(336)
 ax.set_xlabel('Word Count')
@@ -174,7 +194,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (HOWTO)')
-ax.scatter(word_count_howTo,emoji_count_howTo, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_howTo,emoji_count_howTo, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(337)
 ax.set_xlabel('Word Count')
@@ -182,7 +202,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (SPORTS)')
-ax.scatter(word_count_sports,emoji_count_sports, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_sports,emoji_count_sports, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(338)
 ax.set_xlabel('Word Count')
@@ -190,7 +210,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (COMEDY)')
-ax.scatter(word_count_comedy,emoji_count_comedy, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_comedy,emoji_count_comedy, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 ax = fig.add_subplot(339)
 ax.set_xlabel('Word Count')
@@ -198,7 +218,7 @@ ax.set_ylabel('Emoji Count')
 ax.set_xlim([-8,X_VAL])
 ax.set_ylim([-4,Y_VAL])
 plt.title('Word To Emoji Ratio (EDUCATION)')
-ax.scatter(word_count_education,emoji_count_education, edgecolor='black', linewidths=0.2, alpha=0.5, s=20)
+ax.scatter(word_count_education,emoji_count_education, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
 
 
 # Analysis By Gender
