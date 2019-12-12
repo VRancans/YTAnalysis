@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import csv
 
 X_VAL = 200
-Y_VAL = 100
+Y_VAL = 50
 
 youtuber_category = {}
 youtuber_gender = {}
@@ -17,6 +17,7 @@ with open("filtered-lv-youtube-channels.csv", mode='r', encoding="utf8") as csv_
 #By Category
 word_count_total = []
 emoji_count_total = []
+average_word_length = []
 
 word_count_music = []
 emoji_count_music = []
@@ -61,6 +62,7 @@ with open("lv-youtuber-comments-v5.csv", mode='r', encoding="utf8") as csv_file:
         #total
         word_count_total.append(int(row["word_count"]))
         emoji_count_total.append(int(row["emoji_count"]))
+        average_word_length.append(float(row["average_word_length"]))
 
         #category
         if youtuber_category[row["youtuber"]] == "Music":
@@ -128,20 +130,41 @@ for i in range(len(unique_word_count)):
 
     average_emojis[unique_word_count[i]] = (total/count)
 
+average_word_length_converted1 = []
+average_word_length_converted2 = []
+average_word_length_converted3 = []
+
+for i in average_word_length:
+    new_num = i
+    if new_num > 10:
+        new_num = 10
+    average_word_length_converted1.append(new_num)
+
+
 # Total Analysis
 fig = plt.figure()
 
 ax = fig.add_subplot(211)
 ax.set_xlabel('Word Count')
 ax.set_ylabel('Emoji Count')
+ax.set_xlim([-8,X_VAL])
+ax.set_ylim([-4,Y_VAL])
+ax.set_facecolor((0.5, 0.5, 0.5))
 plt.title('Word To Emoji Ratio')
-ax.scatter(word_count_total, emoji_count_total, edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
+pos = ax.scatter(word_count_total, emoji_count_total, alpha=0.2, s=20,
+           c=average_word_length_converted1, cmap=plt.get_cmap('seismic'), edgecolors='none')
+cbar = fig.colorbar(pos)
+
+cbar.ax.get_yaxis().labelpad = 15
+cbar.ax.set_ylabel('Average word length', rotation=270)
 
 ax = fig.add_subplot(212)
 ax.set_xlabel('Word Count')
 ax.set_ylabel('Average Emoji Count')
+ax.set_xlim([-8,X_VAL])
+ax.set_ylim([-1,8])
 plt.title('Average Word to Emoji Ratio')
-ax.scatter(list(average_emojis.keys()), list(average_emojis.values()), edgecolor='black', linewidths=0.1, alpha=0.2, s=20)
+ax.scatter(list(average_emojis.keys()), list(average_emojis.values()), edgecolor='black', linewidths=0.1, alpha=0.7, s=20)
 plt.axhline(y=0, color='r', linestyle='-', alpha=0.2)
 
 
